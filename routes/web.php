@@ -34,7 +34,7 @@ Route::prefix('dashboard')->group(function(){
 
                Route::post("store",[\App\Http\Controllers\AnimalController::class,'store'])->name('animal.store');
                Route::get('index',[\App\Http\Controllers\AnimalController::class,'index'])->name('animal.index');
-               Route::delete('destroy/{id}',[\App\Http\Controllers\AnimalController::class,'destroy'])->name('animal.destroy');
+               Route::delete('/{id}',[\App\Http\Controllers\AnimalController::class,'destroy'])->name('animal.destroy');
            });
 });
 

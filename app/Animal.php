@@ -22,6 +22,6 @@ class Animal extends Model
     {
 
         return $this->belongsToMany(Continent::class, 'animals_continents', 'animal_id', 'continent_id')
-            ->withPivot(['infos','description']);
+            ->withPivot(['infos','description'])->withTimestamps();
     }
 }

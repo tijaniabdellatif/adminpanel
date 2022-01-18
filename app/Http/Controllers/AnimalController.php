@@ -29,24 +29,16 @@ class AnimalController extends Controller
     public function index()
     {
 
-        $test = Animal::join("families","animals.family_id","=","families.id")
-            ->select('animals.id','animal_name','animals.description','image','family_libelle')->get();
+        $animals = Animal::join("families","animals.family_id","=","families.id")
+                 ->select('animals.id','animal_name','animals.description','image','family_libelle')->get();
 
 
         $animal = Animal::all();
-       /* $test = Animal::joinRelationship('family')->get();
-
-        dd($test);
-
-
-        $animals = Animal::with('family')->get();
-
-       $**/
 
 
 
 
-        return view('animals.index',compact('test','animal'));
+        return view('animals.index',compact('animals','animal'));
     }
 
     /**
@@ -93,15 +85,30 @@ class AnimalController extends Controller
 
 
         $continents = $request->continent;
-        foreach ($continents as $key => $name){
+
+        if(empty($continents)){
 
             $insert = [
 
                 'animal_id'=> $data->id,
-                'continent_id' => $request->continent[$key]
-             ];
+                'continent_id' => 0,
+            ];
 
             DB::table('animals_continents')->insert($insert);
+        }
+        else {
+
+            foreach ($continents as $key => $name){
+
+                $insert = [
+
+                    'animal_id'=> $data->id,
+                    'continent_id' => $request->continent[$key]
+                ];
+
+                DB::table('animals_continents')->insert($insert);
+            }
+
         }
 
 
@@ -157,7 +164,7 @@ class AnimalController extends Controller
         $animal->delete();
 
         return \response()->json([
-            'success' => 'Deleted'
+            'success' => 'Record deleted'
         ]);
     }
 }

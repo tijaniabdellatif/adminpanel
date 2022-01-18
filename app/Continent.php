@@ -11,7 +11,7 @@ class Continent extends Model
 
     public function animals(){
 
-        return $this->belongsToMany(Animal::class,'animals_continents','continent_id','animal_id')->withPivot(['infos','description']);
+        return $this->belongsToMany(Animal::class,'animals_continents','continent_id','animal_id')->withPivot(['infos','description'])->withTimestamps();
 
     }
 }
